@@ -1,0 +1,45 @@
+{% extends "layouts/base.html" %}
+{% load static%}
+
+{% block content %}   
+
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-header">
+
+            <a class="btn btn-link " href="{% url 'movies.index' %}">Movies </a>
+
+            <h3 style="text-align:center">Assigned Posters</h3>
+
+        </div>
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User Name</th>
+                            <th>Poster Name</th>
+                            <th>Poster Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for poster in posters %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{poster.user.email}}</td>
+
+                            <td>{{poster.poster.name}}</td>
+                            <td><img style="height:80px; width:80px" src="{{poster.poster.poster.url}}"/></td>
+
+                            
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}

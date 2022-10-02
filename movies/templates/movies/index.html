@@ -1,0 +1,52 @@
+{% extends "layouts/base.html" %}
+{% load static%}
+
+{% block content %}   
+
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-header">
+            {% if request.user.is_superuser %}
+            <a class="btn btn-success m-t-10 m-l-10" href="{% url 'movie.add' %}"> Add Movies </a>
+            <a class="btn btn-success m-t-10 m-l-10" href="{% url 'movie.assign' %}"> Assign Movies </a>
+            <a href="{% url 'users.index' %}" class="btn btn-link" >Users</a>
+            {% else %}
+            <a href="{% url 'posters.dashboard' %}" class="btn btn-link" >Assigned Posters</a>
+            {% endif %}
+            <h3 style="text-align:center">Movies</h3>
+
+        </div>
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Poster</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movie in movies %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{movie.name}}</td>
+                            <td><img style="height:80px; width:80px" src="{{movie.poster.url}}"/></td>
+
+                            <td>
+                                {% if request.user.is_superuser %}
+                                <a href="{% url 'movie.edit' movie.id %}" class="label theme-bg2 text-white f-12">Edit</a>
+                                <a href="{% url 'movie.delete' movie.id %}" class="label theme-bg text-white f-12">Delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}
